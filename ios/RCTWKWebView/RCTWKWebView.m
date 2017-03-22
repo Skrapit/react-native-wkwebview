@@ -44,11 +44,16 @@
     
     _webView = [[WKWebView alloc] initWithFrame:self.bounds configuration:config];
     _webView.UIDelegate = self;
+    _webView.scrollView.delegate = self;
     _webView.navigationDelegate = self;
     [_webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
     [self addSubview:_webView];
   }
   return self;
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+  scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
 }
 
 RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
